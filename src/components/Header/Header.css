@@ -1,0 +1,21 @@
+.header {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+
+    .heading {
+        color: black;
+        font-size: 40px;
+        font-weight: bold;
+    }
+
+    .reset-button {
+        border: 2px solid black;
+        border-radius: 10px;
+        color: black;
+        padding: 10px;
+        cursor: pointer;
+    }
+}

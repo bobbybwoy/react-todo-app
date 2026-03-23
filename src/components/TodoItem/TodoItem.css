@@ -1,0 +1,25 @@
+.todo-item {
+    align-items: center;
+    border: 3px solid black;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 20px;
+
+
+    .check-box {
+        background-color: white;
+    }
+
+    .todo-text {
+        border: 1px solid green;
+        color: black;
+        width: 100px;
+    }
+
+    .trash {
+        width: 5vw;
+    }
+}
