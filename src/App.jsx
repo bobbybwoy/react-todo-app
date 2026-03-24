@@ -4,6 +4,7 @@ import './App.css'
 import TodoList from './containers/TodoList/TodoList'
 import Header from './components/Header/Header';
 import TodoEntry from './components/TodoEntry/TodoEntry';
+import GamesList from './containers/GamesList/GamesList';
 
 function App() {
 
@@ -46,12 +47,14 @@ function App() {
 
     return (
         <div className="app">
-            <Header resetTodoList={resetTodoList} />
+            <Header buttonFunction={resetTodoList} title={"My Todos"} buttonTitle={"Reset"} />
             <TodoEntry addTodoItem={addTodoItem} />
             <TodoList
                 todoList={todoList}
                 removeTodoItem={removeTodoItem}
                 completeTodoItem={completeTodoItem} />
+
+            <GamesList />
         </div>
     )
 }
