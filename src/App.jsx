@@ -45,13 +45,14 @@ function App() {
     };
 
     const removeTodoItem = (id) => {
-        console.log(`removeTodoItem() for ${id}`);
         setTodoList([...todoList].filter(todo => todo.id !== id));
     };
 
     const completeTodoItem = (id) => {
-        console.log(`completeTodoItem() for ${id}`);
-
+        const newTodoList = [...todoList];
+        const todoIndex = newTodoList.findIndex(todo => todo.id === id);
+        newTodoList[todoIndex].isCompleted = !newTodoList[todoIndex].isCompleted;
+        setTodoList(newTodoList); // I am not happy with this...
     };
 
     return (

@@ -3,12 +3,12 @@ import trash from "../../assets/trash.svg";
 import "./TodoItem.css";
 
 const TodoItem = ({ todoItem, removeTodoItem, completeTodoItem }) => {
+    console.log(todoItem.isCompleted)
 
     let todoTextStyle = "todo-text";
 
     if (todoItem.isCompleted) {
-        todoTextStyle
-
+        todoTextStyle += " strikethrough";
     }
 
     return (
@@ -17,7 +17,7 @@ const TodoItem = ({ todoItem, removeTodoItem, completeTodoItem }) => {
                 type="checkbox"
                 className="check-box"
                 onClick={() => completeTodoItem(todoItem.id)} />
-            <div className="todo-text">
+            <div className={todoTextStyle}>
                 {todoItem.description}
             </div>
             <img

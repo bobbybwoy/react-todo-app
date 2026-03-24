@@ -5,6 +5,8 @@ const TodoList = ({ todoList, removeTodoItem, completeTodoItem }) => {
     // console.log(todoList);
 
     const todos = todoList.map(todoItem => {
+        console.log(todoItem);
+
         return <TodoItem
             todoItem={todoItem}
             removeTodoItem={removeTodoItem}
