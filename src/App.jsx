@@ -40,15 +40,18 @@ function App() {
     }
 
     const addTodoItem = (e) => {
-        console.log("addTodoItem()");
+        e.preventDefault();
+        console.log(`addTodoItem() for ${e.target[0].value}`);
     };
 
     const removeTodoItem = (id) => {
-        console.log("removeTodoItem()");
+        console.log(`removeTodoItem() for ${id}`);
+        setTodoList([...todoList].filter(todo => todo.id !== id));
     };
 
     const completeTodoItem = (id) => {
-        console.log("completeTodoItem()");
+        console.log(`completeTodoItem() for ${id}`);
+
     };
 
     return (

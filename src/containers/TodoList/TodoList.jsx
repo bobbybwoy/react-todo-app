@@ -13,12 +13,12 @@ const TodoList = ({ todoList, removeTodoItem, completeTodoItem }) => {
 
 
     return (
-        <div className="todo-list">
+        <ul className="todo-list">
             {todoList.length === 0
                 ? <p>Nothing to see hear yet... Add a task in the field above! ☝️</p>
                 : todos
             }
-        </div>
+        </ul>
     )
 };
 

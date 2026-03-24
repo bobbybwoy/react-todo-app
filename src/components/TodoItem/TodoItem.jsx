@@ -4,8 +4,15 @@ import "./TodoItem.css";
 
 const TodoItem = ({ todoItem, removeTodoItem, completeTodoItem }) => {
 
+    let todoTextStyle = "todo-text";
+
+    if (todoItem.isCompleted) {
+        todoTextStyle
+
+    }
+
     return (
-        <div className="todo-item">
+        <li className="todo-item" key={todoItem.id}>
             <input
                 type="checkbox"
                 className="check-box"
@@ -18,7 +25,7 @@ const TodoItem = ({ todoItem, removeTodoItem, completeTodoItem }) => {
                 className="trash"
                 alt={`Remove todo: ${todoItem.description}`}
                 onClick={() => removeTodoItem(todoItem.id)} />
-        </div>
+        </li>
     );
 };
 
