@@ -1,16 +1,17 @@
-# React + Vite
+# READ ME
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a simple todo app based on a brief found [here](https://github.com/nology-tech/uk-documentation/blob/main/modules%2FReact%2F00-Resources%2FProjects%2F02-My-Todos%2Fbrief.md).
 
-Currently, two official plugins are available:
+You can add todo items, check/uncheck them and delete them. You cannot add blank todo items.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Install
 
-## React Compiler
+Once the repo has been cloned, navigate to the `react-todo-app` folder, and type in the following command:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+npm install
+```
 
-## Expanding the ESLint configuration
+## Running the application
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Once npm has installed the required packages, type `npm run dev`. Once the application is running, cmd/ctrl-click or copy/paste the localhost link.
