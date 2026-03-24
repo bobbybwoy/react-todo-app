@@ -3,37 +3,14 @@ import { useState } from 'react'
 import './App.css'
 import TodoList from './containers/TodoList/TodoList'
 import Header from './components/Header/Header';
+import TodoEntry from './components/TodoEntry/TodoEntry';
 
 function App() {
 
     const [todoId, setTodoId] = useState(1);
-    const [todoList, setTodoList] = useState([
-        {
-            id: 1,
-            description: "Todo Item 1",
-            isCompleted: false,
-        },
-        {
-            id: 2,
-            description: "Todo Item 2",
-            isCompleted: false,
-        },
-        {
-            id: 3,
-            description: "Todo Item 3",
-            isCompleted: false,
-        },
-        {
-            id: 4,
-            description: "Todo Item 4",
-            isCompleted: false,
-        },
-        {
-            id: 5,
-            description: "Todo Item 5",
-            isCompleted: false,
-        },
-    ]);
+    const [todoList, setTodoList] = useState([]);
+
+    console.log(todoList);
 
     const resetTodoList = () => {
         setTodoList([]);
@@ -41,7 +18,19 @@ function App() {
 
     const addTodoItem = (e) => {
         e.preventDefault();
-        console.log(`addTodoItem() for ${e.target[0].value}`);
+        if (e.target[0].value === "") {
+            alert("please enter a todo");
+        }
+
+        const newTodoItem = {
+            id: todoId,
+            description: e.target[0].value,
+            isCompleted: false,
+        };
+
+        setTodoList([...todoList, newTodoItem]);
+        setTodoId(todoId + 1);
+        e.target.reset();
     };
 
     const removeTodoItem = (id) => {
@@ -58,6 +47,7 @@ function App() {
     return (
         <div className="app">
             <Header resetTodoList={resetTodoList} />
+            <TodoEntry addTodoItem={addTodoItem} />
             <TodoList
                 todoList={todoList}
                 removeTodoItem={removeTodoItem}

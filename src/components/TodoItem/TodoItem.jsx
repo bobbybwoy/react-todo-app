@@ -3,7 +3,6 @@ import trash from "../../assets/trash.svg";
 import "./TodoItem.css";
 
 const TodoItem = ({ todoItem, removeTodoItem, completeTodoItem }) => {
-    console.log(todoItem.isCompleted)
 
     let todoTextStyle = "todo-text";
 
@@ -12,7 +11,7 @@ const TodoItem = ({ todoItem, removeTodoItem, completeTodoItem }) => {
     }
 
     return (
-        <li className="todo-item" key={todoItem.id}>
+        <li className="todo-item" key={`todoItem-${todoItem.id}`}>
             <input
                 type="checkbox"
                 className="check-box"
