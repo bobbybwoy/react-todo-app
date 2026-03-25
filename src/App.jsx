@@ -11,8 +11,6 @@ function App() {
     const [todoId, setTodoId] = useState(1);
     const [todoList, setTodoList] = useState([]);
 
-    console.log(todoList);
-
     const resetTodoList = () => {
         setTodoList([]);
     }

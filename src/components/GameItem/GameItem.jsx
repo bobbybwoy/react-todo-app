@@ -1,11 +1,19 @@
 import "./GameItem.css";
 
-const GameItem = () => {
+const GameItem = ({ game }) => {
 
     return (
-        <>
-            GameItem component
-        </>
+        <article className="game-item">
+            <h3>{game.name}</h3>
+            <div className="game-content">
+                <section className="game-description">{game.description}</section>
+                <section className="game-info">
+                    <p><strong>Developer:</strong> {game.developer}</p>
+                    <p><strong>Published by:</strong> {game.publisher}</p>
+                    <p><strong>Released on:</strong> {game.released_date}</p>
+                </section>
+            </div>
+        </article>
     );
 };
 
