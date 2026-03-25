@@ -1,11 +1,11 @@
 import "./Header.css";
 
-const Header = ({ resetTodoList }) => {
+const Header = ({ buttonFunction, title, buttonTitle }) => {
 
     return (
         <div className="header">
-            <span className="heading">My Todos</span>
-            <span className="reset-button" onClick={resetTodoList}>Reset</span>
+            <span className="heading">{title}</span>
+            {buttonFunction && <span className="reset-button" onClick={buttonFunction}>{buttonTitle}</span>}
         </div>
     )
 };
