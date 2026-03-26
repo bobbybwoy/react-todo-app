@@ -57,8 +57,19 @@ api.post("/todos", (req, res) => {
 });
 
 api.put("/todos/:id", (req, res) => {
-    res.statusCode = 502;
-    res.send();
+    const id = req.params.id;
+
+    const todoIndex = dbTodoLists.findIndex(todo => todo.id == id);
+
+    if (todoIndex === -1) {
+        res.statusCode = 400;
+        res.send();
+    }
+
+    dbTodoLists[todoIndex].isCompleted = !dbTodoLists[todoIndex].isCompleted;
+
+    res.statusCode = 200;
+    res.send(dbTodoLists);
 });
 
 api.delete("/todos", (req, res) => {

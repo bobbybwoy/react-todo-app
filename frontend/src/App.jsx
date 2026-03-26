@@ -8,7 +8,6 @@ import GamesList from './containers/GamesList/GamesList';
 
 function App() {
 
-    // const [todoId, setTodoId] = useState(1);
     const [todoList, setTodoList] = useState([]);
     const API_URL = "http://localhost:3000";
     const OK = 200;
@@ -76,10 +75,21 @@ function App() {
     };
 
     const completeTodoItem = (id) => {
-        const newTodoList = [...todoList];
-        const todoIndex = newTodoList.findIndex(todo => todo.id === id);
-        newTodoList[todoIndex].isCompleted = !newTodoList[todoIndex].isCompleted;
-        setTodoList(newTodoList); // I am not happy with this...
+        // const newTodoList = [...todoList];
+        // const todoIndex = newTodoList.findIndex(todo => todo.id === id);
+        // newTodoList[todoIndex].isCompleted = !newTodoList[todoIndex].isCompleted;
+        // setTodoList(newTodoList); // I am not happy with this...
+        fetch(`${API_URL}/todos/${id}`, {
+            method: "PUT",
+        }).then(resp => {
+            if (resp.status !== OK) {
+                throw new Error(`There was an issue trying to mark the todo as complete for ${id}`);
+            }
+
+            return resp.json();
+        }).then(data => {
+            setTodoList(data);
+        });
     };
 
     return (
