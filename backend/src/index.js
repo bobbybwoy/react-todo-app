@@ -75,7 +75,6 @@ api.put("/todos/:id", (req, res) => {
 api.delete("/todos", (req, res) => {
     console.log("DELETE");
     res.statusCode = 204;
-    // dbTodoLists = [];
     dbTodoLists.splice(0, dbTodoLists.length);
     res.send(dbTodoLists);
 });

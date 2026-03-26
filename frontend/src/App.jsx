@@ -75,10 +75,6 @@ function App() {
     };
 
     const completeTodoItem = (id) => {
-        // const newTodoList = [...todoList];
-        // const todoIndex = newTodoList.findIndex(todo => todo.id === id);
-        // newTodoList[todoIndex].isCompleted = !newTodoList[todoIndex].isCompleted;
-        // setTodoList(newTodoList); // I am not happy with this...
         fetch(`${API_URL}/todos/${id}`, {
             method: "PUT",
         }).then(resp => {
