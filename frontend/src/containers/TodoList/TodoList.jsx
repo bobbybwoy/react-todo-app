@@ -6,6 +6,7 @@ const TodoList = ({ todoList, removeTodoItem, completeTodoItem }) => {
     const todos = todoList.map(todoItem => {
 
         return <TodoItem
+            key={`todoItem-${todoItem.id}`}
             todoItem={todoItem}
             removeTodoItem={removeTodoItem}
             completeTodoItem={completeTodoItem} />

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import './App.css'
 import TodoList from './containers/TodoList/TodoList'
@@ -8,27 +8,66 @@ import GamesList from './containers/GamesList/GamesList';
 
 function App() {
 
-    const [todoId, setTodoId] = useState(1);
+    // const [todoId, setTodoId] = useState(1);
     const [todoList, setTodoList] = useState([]);
+    const API_URL = "http://localhost:3000";
+    const OK = 200;
+    const CREATED = 201;
+    const NO_CONTENT = 204;
+
+    const getTodosFromAPI = () => {
+        fetch(`${API_URL}/todos/`)
+            .then(resp => {
+                if (resp.status !== OK) {
+                    throw new Error("Could not retrieve the todos from the server");
+                }
+                return resp.json()
+            })
+            .then(data => {
+                setTodoList(data);
+            });
+    };
+
+    useEffect(getTodosFromAPI, []);
 
     const resetTodoList = () => {
-        setTodoList([]);
+        // setTodoList([]);
+        fetch(`${API_URL}/todos`, {
+            method: "DELETE",
+        }).then(resp => {
+            if (resp.status !== NO_CONTENT) {
+                throw new Error("There was an issue deleting the todos from the server");
+            }
+            return resp.json();
+        }).then(data => {
+            setTodoList(data);
+        });
     }
 
     const addTodoItem = (e) => {
         e.preventDefault();
         if (e.target[0].value === "") {
             alert("please enter a todo");
+            return;
         }
 
-        const newTodoItem = {
-            id: todoId,
-            description: e.target[0].value,
-            isCompleted: false,
-        };
+        const bodyText = JSON.stringify({
+            todo: e.target[0].value,
+        });
 
-        setTodoList([...todoList, newTodoItem]);
-        setTodoId(todoId + 1);
+        fetch(`${API_URL}/todos/`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: bodyText,
+        }).then(resp => {
+            if (resp.status !== CREATED) {
+                throw new Error("There was a problem storing the todo item");
+            }
+            return resp.json();
+        }).then(data => {
+            setTodoList(data);
+        });
+
         e.target.reset();
     };
 

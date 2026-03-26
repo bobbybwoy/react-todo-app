@@ -11,14 +11,14 @@ const TodoItem = ({ todoItem, removeTodoItem, completeTodoItem }) => {
     }
 
     return (
-        <li className="todo-item" key={`todoItem-${todoItem.id}`}>
+        <li className="todo-item">
             <input
                 type="checkbox"
                 className="check-box"
                 onClick={() => completeTodoItem(todoItem.id)} />
-            <div className={todoTextStyle}>
+            <span className={todoTextStyle}>
                 {todoItem.description}
-            </div>
+            </span>
             <img
                 src={trash}
                 className="trash"
