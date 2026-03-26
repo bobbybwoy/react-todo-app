@@ -34,7 +34,7 @@ function App() {
         fetch(`${API_URL}/todos`, {
             method: "DELETE",
         }).then(resp => {
-            if (resp.status !== NO_CONTENT) {
+            if (resp.status !== OK) {
                 throw new Error("There was an issue deleting the todos from the server");
             }
             return resp.json();
@@ -71,7 +71,19 @@ function App() {
     };
 
     const removeTodoItem = (id) => {
-        setTodoList([...todoList].filter(todo => todo.id !== id));
+        // setTodoList([...todoList].filter(todo => todo.id !== id));
+        fetch(`${API_URL}/todos/${id}`, {
+            method: "DELETE",
+        }).then(resp => {
+            if (resp.status !== OK) {
+                throw new Error(`There was an error attempting to delete item ${id}`);
+            }
+
+            return resp.json();
+        }).then(data => {
+            console.log(data);
+            setTodoList(data);
+        });
     };
 
     const completeTodoItem = (id) => {

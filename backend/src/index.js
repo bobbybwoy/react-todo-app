@@ -16,31 +16,33 @@ api.use(express.json());
 
 // Capture the new 
 const dbTodoLists = [
-    {
-        id: 1,
-        description: "Implement Remove Todo Item",
-        isCompleted: false,
-    },
-    {
-        id: 2,
-        description: "Implement Add Todo Item",
-        isCompleted: false,
-    },
-    {
-        id: 3,
-        description: "Implement Complete Todo Item",
-        isCompleted: false,
-    },
+    // {
+    //     id: 1,
+    //     description: "Implement Remove Todo Item",
+    //     isCompleted: false,
+    // },
+    // {
+    //     id: 2,
+    //     description: "Implement Add Todo Item",
+    //     isCompleted: false,
+    // },
+    // {
+    //     id: 3,
+    //     description: "Implement Complete Todo Item",
+    //     isCompleted: false,
+    // },
 ];
 let todoId = 4;
 
 // Get all of the todo items
 api.get("/todos", (req, res) => {
+    console.log(`${req.method}: ${req.headers.origin}${req.path}`);
     res.send(dbTodoLists);
 });
 
 // Add a todo to the list 
 api.post("/todos", (req, res) => {
+    console.log(`${req.method}: ${req.headers.origin}`);
     // Extract the text from the body...
     const todo = req.body.todo;
 
@@ -57,6 +59,7 @@ api.post("/todos", (req, res) => {
 });
 
 api.put("/todos/:id", (req, res) => {
+    console.log(`${req.method}: ${req.headers.origin}${req.path}`);
     const id = req.params.id;
 
     const todoIndex = dbTodoLists.findIndex(todo => todo.id == id);
@@ -73,16 +76,22 @@ api.put("/todos/:id", (req, res) => {
 });
 
 api.delete("/todos", (req, res) => {
-    console.log("DELETE");
-    res.statusCode = 204;
+    console.log(`${req.method}: ${req.headers.origin}${req.path}`);
+    res.statusCode = 200;
     dbTodoLists.splice(0, dbTodoLists.length);
     res.send(dbTodoLists);
 });
 
 api.delete("/todos/:id", (req, res) => {
-    console.log("DELETE");
-    res.statusCode = 204;
-    dbTodoLists = [];
+    console.log(`${req.method}: ${req.headers.origin}${req.path}`);
+    const id = parseInt(req.params.id);
+
+    const filteredTodos = dbTodoLists.filter(todo => todo.id !== id);
+
+    dbTodoLists.splice(0, dbTodoLists.length);
+    filteredTodos.forEach(todo => dbTodoLists.push(todo));
+
+    res.statusCode = 200;
     res.send(dbTodoLists);
 });
 
