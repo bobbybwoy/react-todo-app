@@ -1,13 +1,11 @@
 const express = require("express");
 const mongoose = require("mongoose");
-// const dotenv = require("dotenv");
+const dotenv = require("dotenv");
+const TodosModel = require("../models/todo.js");
 
-// dotenv.config();
+dotenv.config();
 
-// mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${DB_URL}`, {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true
-// });
+mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_URL}`);
 
 const PORT = 3000;
 
@@ -15,29 +13,24 @@ const api = express();
 api.use(express.json());
 
 // Capture the new 
-const dbTodoLists = [
-    // {
-    //     id: 1,
-    //     description: "Implement Remove Todo Item",
-    //     isCompleted: false,
-    // },
-    // {
-    //     id: 2,
-    //     description: "Implement Add Todo Item",
-    //     isCompleted: false,
-    // },
-    // {
-    //     id: 3,
-    //     description: "Implement Complete Todo Item",
-    //     isCompleted: false,
-    // },
-];
-let todoId = 4;
+const dbTodoLists = [];
+// let todoId = 4;
 
 // Get all of the todo items
 api.get("/todos", (req, res) => {
     console.log(`${req.method}: ${req.headers.origin}${req.path}`);
-    res.send(dbTodoLists);
+    TodosModel.find().exec()
+        .then(resp => {
+            dbTodoLists.splice(0, dbTodoLists.length);
+            resp.map(todos => {
+                dbTodoLists.push({
+                    id: todos._id.toString(),
+                    description: todos.description,
+                    isCompleted: todos.isCompleted
+                });
+            });
+            res.send(dbTodoLists);
+        });
 });
 
 // Add a todo to the list 
@@ -46,13 +39,10 @@ api.post("/todos", (req, res) => {
     // Extract the text from the body...
     const todo = req.body.todo;
 
-    // pretend that you are the database
-    dbTodoLists.push({
-        id: todoId,
+    const todoItem = TodosModel.create({
         description: todo,
         isCompleted: false,
     });
-    todoId++;
 
     res.statusCode = 201;
     res.send(dbTodoLists);
