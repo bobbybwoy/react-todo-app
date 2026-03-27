@@ -15,7 +15,7 @@ const TodoItem = ({ todoItem, removeTodoItem, completeTodoItem }) => {
             <input
                 type="checkbox"
                 className="check-box"
-                onClick={() => completeTodoItem(todoItem.id)} />
+                onChange={() => completeTodoItem(todoItem.id)} />
             <span className={todoTextStyle}>
                 {todoItem.description}
             </span>
