@@ -66,8 +66,9 @@ api.put("/todos/:id", async (req, res) => {
 
 api.delete("/todos", async (req, res) => {
     console.log(`${req.method}: ${req.headers.origin}${req.path}`);
+    await TodosModel.deleteMany();
+    await getTodos();
     res.statusCode = 200;
-    dbTodoLists.splice(0, dbTodoLists.length);
     res.send(dbTodoLists);
 });
 
