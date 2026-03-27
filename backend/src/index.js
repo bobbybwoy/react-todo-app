@@ -26,7 +26,6 @@ const getTodos = async () => {
             isCompleted: todo.isCompleted,
         });
     });
-    console.log(dbTodoLists);
 }
 
 // Get all of the todo items
