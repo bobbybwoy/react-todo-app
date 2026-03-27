@@ -1,13 +1,11 @@
 const express = require("express");
 const mongoose = require("mongoose");
-// const dotenv = require("dotenv");
+const dotenv = require("dotenv");
+const TodosModel = require("../models/todo.js");
 
-// dotenv.config();
+dotenv.config();
 
-// mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${DB_URL}`, {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true
-// });
+mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_URL}`);
 
 const PORT = 3000;
 
@@ -15,81 +13,72 @@ const api = express();
 api.use(express.json());
 
 // Capture the new 
-const dbTodoLists = [
-    // {
-    //     id: 1,
-    //     description: "Implement Remove Todo Item",
-    //     isCompleted: false,
-    // },
-    // {
-    //     id: 2,
-    //     description: "Implement Add Todo Item",
-    //     isCompleted: false,
-    // },
-    // {
-    //     id: 3,
-    //     description: "Implement Complete Todo Item",
-    //     isCompleted: false,
-    // },
-];
-let todoId = 4;
+const dbTodoLists = [];
+// let todoId = 4;
+
+const getTodos = async () => {
+    dbTodoLists.splice(0, dbTodoLists.length);
+    const todos = await TodosModel.find().exec();
+    todos.map(todo => {
+        dbTodoLists.push({
+            id: todo._id.toString(),
+            description: todo.description,
+            isCompleted: todo.isCompleted,
+        });
+    });
+    console.log(dbTodoLists);
+}
 
 // Get all of the todo items
-api.get("/todos", (req, res) => {
+api.get("/todos", async (req, res) => {
     console.log(`${req.method}: ${req.headers.origin}${req.path}`);
+    await getTodos();
     res.send(dbTodoLists);
 });
 
 // Add a todo to the list 
-api.post("/todos", (req, res) => {
+api.post("/todos", async (req, res) => {
     console.log(`${req.method}: ${req.headers.origin}`);
     // Extract the text from the body...
     const todo = req.body.todo;
 
-    // pretend that you are the database
-    dbTodoLists.push({
-        id: todoId,
+    await TodosModel.create({
         description: todo,
         isCompleted: false,
     });
-    todoId++;
 
     res.statusCode = 201;
+    await getTodos();
     res.send(dbTodoLists);
 });
 
-api.put("/todos/:id", (req, res) => {
+api.put("/todos/:id", async (req, res) => {
     console.log(`${req.method}: ${req.headers.origin}${req.path}`);
     const id = req.params.id;
 
-    const todoIndex = dbTodoLists.findIndex(todo => todo.id == id);
-
-    if (todoIndex === -1) {
-        res.statusCode = 400;
-        res.send();
-    }
-
-    dbTodoLists[todoIndex].isCompleted = !dbTodoLists[todoIndex].isCompleted;
-
+    const todoItem = await TodosModel.findById(id).exec();
+    todoItem.isCompleted = !todoItem.isCompleted;
+    await todoItem.save();
+    await getTodos();
     res.statusCode = 200;
     res.send(dbTodoLists);
 });
 
-api.delete("/todos", (req, res) => {
+api.delete("/todos", async (req, res) => {
     console.log(`${req.method}: ${req.headers.origin}${req.path}`);
+    await TodosModel.deleteMany();
+    await getTodos();
     res.statusCode = 200;
-    dbTodoLists.splice(0, dbTodoLists.length);
     res.send(dbTodoLists);
 });
 
-api.delete("/todos/:id", (req, res) => {
+api.delete("/todos/:id", async (req, res) => {
     console.log(`${req.method}: ${req.headers.origin}${req.path}`);
-    const id = parseInt(req.params.id);
+    const id = req.params.id;
+    console.log(id);
 
-    const filteredTodos = dbTodoLists.filter(todo => todo.id !== id);
-
-    dbTodoLists.splice(0, dbTodoLists.length);
-    filteredTodos.forEach(todo => dbTodoLists.push(todo));
+    await TodosModel.findByIdAndDelete(id);
+    await getTodos();
 
     res.statusCode = 200;
     res.send(dbTodoLists);
